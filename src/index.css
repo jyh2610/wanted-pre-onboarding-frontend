@@ -14,3 +14,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@layer base {
+  .frame {
+    @apply bg-gray-300 w-96 h-3/4 my-20 flex flex-col justify-center items-center;
+  }
+}
