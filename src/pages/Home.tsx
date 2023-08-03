@@ -1,11 +1,10 @@
-import useMove from "../hooks/useMove";
-
+import { useNavigate } from "react-router-dom";
 function Home() {
   const btnObj = [{ text: "SignIn" }, { text: "SignUp" }, { text: "Todo" }];
-  const navigate = useMove();
+  const navigate = useNavigate();
 
   const pageHandler = (page: string) => {
-    navigate(page);
+    navigate(`/${page}`);
   };
 
   return (
