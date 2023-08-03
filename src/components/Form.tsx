@@ -14,7 +14,9 @@ function Form({ type }: { type: string }) {
     "email-input": "",
     "password-input": "",
   });
-
+  const emailVaild = form["email-input"].includes("@");
+  const passwordVaild = form["password-input"].length >= 8;
+  const isValid = !(emailVaild && passwordVaild);
   const FormValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const testId = event.target.getAttribute("data-testid");
     setForm({
@@ -65,7 +67,11 @@ function Form({ type }: { type: string }) {
         data-testid="password-input"
         placeholder="비밀번호"
       />
-      <button className="bg-orange-600" data-testid="signup-button">
+      <button
+        disabled={isValid}
+        className="bg-orange-600"
+        data-testid="signup-button"
+      >
         {type === "up" ? "회원가입" : "로그인"}
       </button>
     </form>
