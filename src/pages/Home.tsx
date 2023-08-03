@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 function Home() {
-  const btnObj = [{ text: "SignIn" }, { text: "SignUp" }, { text: "Todo" }];
+  const btnObj = [{ text: "signin" }, { text: "signup" }, { text: "todo" }];
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
   const pageHandler = (page: string) => {
-    navigate(`/${page}`);
+    if (token) {
+      navigate("/todo");
+    } else if (!token) {
+      navigate(`/${page}`);
+      page === "todo" && navigate("/signin");
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sign } from "../API/api";
 
 interface FormState {
@@ -23,13 +23,15 @@ function Form({ type }: { type: string }) {
     });
   };
 
-  const postData = () => {
+  const postData = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     if (type === "in") {
       signForm
         .signin(form["email-input"], form["password-input"])
         .then((res) => {
           if (res) {
             localStorage.setItem("token", res.data.access_token);
+            alert("로그인 성공");
             navigate("/todo");
           }
         });
@@ -39,14 +41,18 @@ function Form({ type }: { type: string }) {
         .signup(form["email-input"], form["password-input"])
         .then((res) => {
           if (res) {
+            alert("회원가입 완료");
             navigate("/signin");
           }
         });
     }
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    token && navigate("/todo");
+  }, [navigate]);
   return (
-    <div className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2" onSubmit={postData}>
       <input
         value={form["email-input"]}
         onChange={FormValueHandler}
@@ -59,14 +65,10 @@ function Form({ type }: { type: string }) {
         data-testid="password-input"
         placeholder="비밀번호"
       />
-      <button
-        className="bg-orange-600"
-        onClick={postData}
-        data-testid="signup-button"
-      >
+      <button className="bg-orange-600" data-testid="signup-button">
         {type === "up" ? "회원가입" : "로그인"}
       </button>
-    </div>
+    </form>
   );
 }
 
