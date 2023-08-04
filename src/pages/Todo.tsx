@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import TodoForm from "../components/todos/TodoForm";
+import TodoList from "../components/todos/TodoList";
 
 function Todo() {
   const navigate = useNavigate();
@@ -9,7 +11,12 @@ function Todo() {
   useEffect(() => {
     !token && endpoint === "/todo" && navigate("/signin");
   }, [endpoint, navigate, token]);
-  return <div className="frame">todo</div>;
+  return (
+    <div className="frame">
+      <TodoForm />
+      <TodoList />
+    </div>
+  );
 }
 
 export default Todo;
