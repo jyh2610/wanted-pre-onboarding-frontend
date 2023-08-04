@@ -35,7 +35,7 @@ export class Todo {
     };
     return await this.api.put("/todo", { todo, isCompleted }, { headers });
   }
-  async deleteTodo(id: string) {
-    return await this.api.delete(`/todos/:${id}`);
+  async deleteTodo(id: number) {
+    return await this.api.delete(`/todos/${id}`);
   }
 }
