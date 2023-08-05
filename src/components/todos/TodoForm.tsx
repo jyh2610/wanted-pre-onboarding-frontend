@@ -24,7 +24,11 @@ function TodoForm({ setList }: { setList: Function }) {
         data-testid="new-todo-input"
         className="Input"
       />
-      <button className="btn" data-testid="new-todo-add-button">
+      <button
+        disabled={input.length > 0 ? false : true}
+        className="btn"
+        data-testid="new-todo-add-button"
+      >
         추가
       </button>
     </form>
