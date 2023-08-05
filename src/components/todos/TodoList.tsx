@@ -24,7 +24,7 @@ function TodoList({ list, setList }: { list: TodoInfo[]; setList: Function }) {
     <ul className="w-2/3">
       {list.map((item) => {
         return (
-          <li className="flex">
+          <li key={item.id} className="flex">
             <input
               checked={item.isCompleted ? true : false}
               onChange={() => checkHandler(item)}
