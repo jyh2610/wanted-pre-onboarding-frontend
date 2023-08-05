@@ -15,13 +15,17 @@ function TodoPage() {
   const endpoint = location.pathname;
   const token = localStorage.getItem("token");
   useEffect(() => {
-    !token && endpoint === "/todo" && navigate("/signin");
+    if (token) {
+      const todo = new Todo(token!);
+      todo
+        .getTodo()
+        .then((res) => setList(res.data))
+        .catch((err) => console.error(err));
+    } else {
+      endpoint === "/todo" && navigate("/signin");
+    }
   }, [endpoint, navigate, token]);
-  useEffect(() => {
-    const token: string = localStorage.getItem("token")!;
-    const todo = new Todo(token);
-    todo.getTodo().then((res) => setList(res.data));
-  }, []);
+
   return (
     <div className="frame">
       <TodoForm setList={setList} />
