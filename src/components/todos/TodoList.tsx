@@ -1,39 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Todo } from "../../API/todoApi";
+import { useState } from "react";
+import TodoFix from "./TodoFix";
+import List from "./List";
+import { TodoInfo } from "../../pages/TodoPage";
 
-function TodoList() {
-  interface TodoList {
-    id: number;
-    todo: string;
-  }
-  const [list, setList] = useState<TodoList[]>([]);
-  const token: string = localStorage.getItem("token")!;
-  const todo = new Todo(token);
-
-  useEffect(() => {
-    const token: string = localStorage.getItem("token")!;
-    const todo = new Todo(token);
-    todo.getTodo().then((res) => setList(res.data));
-  }, []);
-  const deleteTodo = (id: number) => {
-    todo.deleteTodo(id);
+function TodoList({ list, setList }: { list: TodoInfo[]; setList: Function }) {
+  const [isSelected, setIsSelected] = useState<number>(0);
+  const fixHandler = (id: number) => {
+    setIsSelected(id);
   };
+
   return (
-    <ul>
+    <ul className="w-2/3">
       {list.map((item) => {
         return (
-          <li key={item.id}>
-            <label>
-              <input type="checkbox" />
-              <span>{item.todo}</span>
-            </label>
-            <button data-testid="modify-button">수정</button>
-            <button
-              onClick={() => deleteTodo(item.id)}
-              data-testid="delete-button"
-            >
-              삭제
-            </button>
+          <li className="flex">
+            <input type="checkbox" />
+            {isSelected === item.id ? (
+              <TodoFix item={item} fixHandler={fixHandler} setList={setList} />
+            ) : (
+              <List
+                key={item.id}
+                fixHandler={fixHandler}
+                id={item.id}
+                todo={item.todo}
+                setList={setList}
+              />
+            )}
           </li>
         );
       })}

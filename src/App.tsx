@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SingIn from "./pages/SingIn";
-import Todo from "./pages/Todo";
+import Todo from "./pages/TodoPage";
 import { todoContext } from "./context/todoContext";
 
 const router = createBrowserRouter([

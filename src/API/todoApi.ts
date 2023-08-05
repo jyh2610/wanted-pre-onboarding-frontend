@@ -28,12 +28,16 @@ export class Todo {
   async getTodo() {
     return this.api.get("/todos");
   }
-  async updateTodo(todo: string, isCompleted: boolean) {
+  async updateTodo(todo: string, id: number, isCompleted: boolean) {
     const headers = {
-      Authorization: this.token,
+      Authorization: `Bearer ${this.token}`,
       "Content-Type": "application/json",
     };
-    return await this.api.put("/todo", { todo, isCompleted }, { headers });
+    return await this.api.put(
+      `/todos/${id}`,
+      { todo, isCompleted },
+      { headers }
+    );
   }
   async deleteTodo(id: number) {
     return await this.api.delete(`/todos/${id}`);
